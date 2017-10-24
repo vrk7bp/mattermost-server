@@ -19,6 +19,9 @@ config/active.dat
 config/config.json
 /plugins
 
+#keys for license
+/keys
+
 # Enteprise imports file
 imports/imports.go
 

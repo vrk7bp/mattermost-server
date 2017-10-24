@@ -28,13 +28,13 @@ var licenseValue atomic.Value
 var clientLicenseValue atomic.Value
 
 var publicKey []byte = []byte(`-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyZmShlU8Z8HdG0IWSZ8r
-tSyzyxrXkJjsFUf0Ke7bm/TLtIggRdqOcUF3XEWqQk5RGD5vuq7Rlg1zZqMEBk8N
-EZeRhkxyaZW8pLjxwuBUOnXfJew31+gsTNdKZzRjrvPumKr3EtkleuoxNdoatu4E
-HrKmR/4Yi71EqAvkhk7ZjQFuF0osSWJMEEGGCSUYQnTEqUzcZSh1BhVpkIkeu8Kk
-1wCtptODixvEujgqVe+SrE3UlZjBmPjC/CL+3cYmufpSNgcEJm2mwsdaXp2OPpfn
-a0v85XL6i9ote2P+fLZ3wX9EoioHzgdgB7arOxY50QRJO7OyCqpKFKv6lRWTXuSt
-hwIDAQAB
+MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBcyCUQ6b6jkdcegYFva10p
+MH6NPOsimX573Ic7mzPxm95JlTP+Hu3zzl1icGfvzoRB6FvnxCtzqfW/mSvKQxBe
+L1Hdvu9+CxRutL/rsQKMOojxKQEcHrq6n0WtUBNNHKYiPEHQlJ+lKp0P0F+IqFtD
+MxTzz8Td6A+wRESAFrBsGv/B419r9knpE0AjYlI0OSm9IRikNscWXIR+AErnM6Jd
+BcxcoSvSj792fApq2W7lzFZ5QEUnijJzrdvCtfUToztIgdSe8TFrsaCoAPKLG3t4
+WxlD2zE2WEvM5cUk2rgSnZW37LgQvYP258zxJC93+Y3KrsmCTZPA6ePnM65BXek7
+AgMBAAE=
 -----END PUBLIC KEY-----`)
 
 func init() {
