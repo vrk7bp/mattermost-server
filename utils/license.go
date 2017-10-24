@@ -145,7 +145,7 @@ func ValidateLicense(signed []byte) (bool, string) {
 	d := h.Sum(nil)
 
 	err = rsa.VerifyPKCS1v15(rsaPublic, crypto.SHA512, d, signature)
-	if err != nil {
+	if err == nil {
 		l4g.Error(T("utils.license.validate_license.invalid.error"), err.Error())
 		return false, ""
 	}
