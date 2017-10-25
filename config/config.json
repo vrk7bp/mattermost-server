@@ -1,6 +1,6 @@
 {
     "ServiceSettings": {
-        "SiteURL": "http://localhost:8065",
+        "SiteURL": "",
         "LicenseFileLocation": "",
         "ListenAddress": ":8065",
         "ConnectionSecurity": "",
@@ -24,7 +24,7 @@
         "EnableAPIv3": true,
         "EnableLinkPreviews": false,
         "EnableTesting": false,
-        "EnableDeveloper": false,
+        "EnableDeveloper": true,
         "EnableSecurityFixAlert": true,
         "EnableInsecureOutgoingConnections": false,
         "AllowedUntrustedInternalConnections": "",
@@ -60,9 +60,9 @@
         "EnableUserCreation": true,
         "EnableOpenServer": false,
         "RestrictCreationToDomains": "",
-        "EnableCustomBrand": false,
-        "CustomBrandText": "",
-        "CustomDescriptionText": "",
+        "EnableCustomBrand": true,
+        "CustomBrandText": "Scrybe",
+        "CustomDescriptionText": "The premier clinical communication platform",
         "RestrictDirectMessage": "any",
         "RestrictTeamInvite": "all",
         "RestrictPublicChannelManagement": "all",
@@ -90,13 +90,13 @@
     },
     "SqlSettings": {
         "DriverName": "mysql",
-        "DataSource": "mmuser:mostest@tcp(dockerhost:3306)/mattermost_test?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s",
+        "DataSource": "mmuser:mostest@tcp(dockerhost:3306)/mattermost_test?charset=utf8mb4,utf8\u0026readTimeout=30s\u0026writeTimeout=30s",
         "DataSourceReplicas": [],
         "DataSourceSearchReplicas": [],
         "MaxIdleConns": 20,
         "MaxOpenConns": 300,
         "Trace": false,
-        "AtRestEncryptKey": "",
+        "AtRestEncryptKey": "zizgsaeytbn31a758u8gweusbjhgrbuw",
         "QueryTimeout": 30
     },
     "LogSettings": {
@@ -124,7 +124,7 @@
         "DriverName": "local",
         "Directory": "./data/",
         "EnablePublicLink": false,
-        "PublicLinkSalt": "",
+        "PublicLinkSalt": "poifprj6gdm4q6p1rd4jcfs3s7dbfggh",
         "InitialFont": "luximbi.ttf",
         "AmazonS3AccessKeyId": "",
         "AmazonS3SecretAccessKey": "",
@@ -151,7 +151,7 @@
         "SMTPServer": "dockerhost",
         "SMTPPort": "2500",
         "ConnectionSecurity": "",
-        "InviteSalt": "",
+        "InviteSalt": "mtyognh895rn5mtg484bried64wfxqdm",
         "SendPushNotifications": false,
         "PushNotificationServer": "",
         "PushNotificationContents": "generic",
@@ -174,12 +174,12 @@
         "ShowFullName": true
     },
     "SupportSettings": {
-        "TermsOfServiceLink": "https://about.mattermost.com/default-terms/",
-        "PrivacyPolicyLink": "https://about.mattermost.com/default-privacy-policy/",
-        "AboutLink": "https://about.mattermost.com/default-about/",
-        "HelpLink": "https://about.mattermost.com/default-help/",
-        "ReportAProblemLink": "https://about.mattermost.com/default-report-a-problem/",
-        "SupportEmail": "feedback@mattermost.com"
+        "TermsOfServiceLink": "https://google.com",
+        "PrivacyPolicyLink": "https://google.com",
+        "AboutLink": "https://google.com",
+        "HelpLink": "https://google.com",
+        "ReportAProblemLink": "https://google.com",
+        "SupportEmail": "test@test.com"
     },
     "AnnouncementSettings": {
         "EnableBanner": false,
@@ -297,6 +297,7 @@
     },
     "WebrtcSettings": {
         "Enable": false,
+        "GatewayType": null,
         "GatewayWebsocketUrl": "",
         "GatewayAdminUrl": "",
         "GatewayAdminSecret": "",
@@ -332,8 +333,9 @@
         "RunScheduler": true
     },
     "PluginSettings": {
-        "Enable": true,
-        "EnableUploads": false,
-        "Plugins": {}
+        "Enable": false,
+        "EnableUploads": null,
+        "Plugins": {},
+        "PluginStates": {}
     }
 }
