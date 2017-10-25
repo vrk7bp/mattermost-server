@@ -28,10 +28,17 @@ func TestPlugin(t *testing.T) {
 	defer th.TearDown()
 
 	enablePlugins := *th.App.Config().PluginSettings.Enable
+	enableUploadPlugins := *th.App.Config().PluginSettings.EnableUploads
 	defer func() {
-		th.App.UpdateConfig(func(cfg *model.Config) { *cfg.PluginSettings.Enable = enablePlugins })
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			*cfg.PluginSettings.Enable = enablePlugins
+			*cfg.PluginSettings.EnableUploads = enableUploadPlugins
+		})
 	}()
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.PluginSettings.Enable = true })
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		*cfg.PluginSettings.Enable = true
+		*cfg.PluginSettings.EnableUploads = true
+	})
 
 	th.App.InitPlugins(pluginDir, webappDir)
 	defer func() {
@@ -61,22 +68,87 @@ func TestPlugin(t *testing.T) {
 	_, resp = th.SystemAdminClient.UploadPlugin(file)
 	CheckNotImplementedStatus(t, resp)
 
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.PluginSettings.Enable = true })
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		*cfg.PluginSettings.Enable = true
+		*cfg.PluginSettings.EnableUploads = false
+	})
+	_, resp = th.SystemAdminClient.UploadPlugin(file)
+	CheckNotImplementedStatus(t, resp)
+
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.PluginSettings.EnableUploads = true })
 	_, resp = th.Client.UploadPlugin(file)
 	CheckForbiddenStatus(t, resp)
 
-	// Successful get
-	manifests, resp := th.SystemAdminClient.GetPlugins()
+	// Successful gets
+	pluginsResp, resp := th.SystemAdminClient.GetPlugins()
 	CheckNoError(t, resp)
 
 	found := false
-	for _, m := range manifests {
+	for _, m := range pluginsResp.Inactive {
 		if m.Id == manifest.Id {
 			found = true
 		}
 	}
 
 	assert.True(t, found)
+
+	found = false
+	for _, m := range pluginsResp.Active {
+		if m.Id == manifest.Id {
+			found = true
+		}
+	}
+
+	assert.False(t, found)
+
+	states := th.App.Config().PluginSettings.PluginStates
+	defer func() {
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.PluginSettings.PluginStates = states })
+	}()
+
+	// Successful activate
+	ok, resp := th.SystemAdminClient.ActivatePlugin(manifest.Id)
+	CheckNoError(t, resp)
+	assert.True(t, ok)
+
+	pluginsResp, resp = th.SystemAdminClient.GetPlugins()
+	CheckNoError(t, resp)
+
+	found = false
+	for _, m := range pluginsResp.Active {
+		if m.Id == manifest.Id {
+			found = true
+		}
+	}
+
+	assert.True(t, found)
+
+	// Activate error case
+	ok, resp = th.SystemAdminClient.ActivatePlugin("junk")
+	CheckBadRequestStatus(t, resp)
+	assert.False(t, ok)
+
+	// Successful deactivate
+	ok, resp = th.SystemAdminClient.DeactivatePlugin(manifest.Id)
+	CheckNoError(t, resp)
+	assert.True(t, ok)
+
+	pluginsResp, resp = th.SystemAdminClient.GetPlugins()
+	CheckNoError(t, resp)
+
+	found = false
+	for _, m := range pluginsResp.Inactive {
+		if m.Id == manifest.Id {
+			found = true
+		}
+	}
+
+	assert.True(t, found)
+
+	// Deactivate error case
+	ok, resp = th.SystemAdminClient.DeactivatePlugin("junk")
+	CheckBadRequestStatus(t, resp)
+	assert.False(t, ok)
 
 	// Get error cases
 	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.PluginSettings.Enable = false })
@@ -88,7 +160,10 @@ func TestPlugin(t *testing.T) {
 	CheckForbiddenStatus(t, resp)
 
 	// Successful webapp get
-	manifests, resp = th.Client.GetWebappPlugins()
+	_, resp = th.SystemAdminClient.ActivatePlugin(manifest.Id)
+	CheckNoError(t, resp)
+
+	manifests, resp := th.Client.GetWebappPlugins()
 	CheckNoError(t, resp)
 
 	found = false
@@ -101,15 +176,13 @@ func TestPlugin(t *testing.T) {
 	assert.True(t, found)
 
 	// Successful remove
-	ok, resp := th.SystemAdminClient.RemovePlugin(manifest.Id)
+	ok, resp = th.SystemAdminClient.RemovePlugin(manifest.Id)
 	CheckNoError(t, resp)
-
 	assert.True(t, ok)
 
 	// Remove error cases
 	ok, resp = th.SystemAdminClient.RemovePlugin(manifest.Id)
 	CheckBadRequestStatus(t, resp)
-
 	assert.False(t, ok)
 
 	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.PluginSettings.Enable = false })
