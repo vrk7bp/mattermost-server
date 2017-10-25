@@ -19,6 +19,9 @@ config/active.dat
 config/config.json
 /plugins
 
+# Private/Public Key files
+keys/
+
 # Enteprise imports file
 imports/imports.go
 
