@@ -58,11 +58,11 @@
         "MaxUsersPerTeam": 50,
         "EnableTeamCreation": true,
         "EnableUserCreation": true,
-        "EnableOpenServer": false,
+        "EnableOpenServer": true,
         "RestrictCreationToDomains": "",
         "EnableCustomBrand": true,
         "CustomBrandText": "Scrybe",
-        "CustomDescriptionText": "The premier clinical communication platform",
+        "CustomDescriptionText": "The premier team-based clinical communication platform",
         "RestrictDirectMessage": "any",
         "RestrictTeamInvite": "all",
         "RestrictPublicChannelManagement": "all",
@@ -174,12 +174,12 @@
         "ShowFullName": true
     },
     "SupportSettings": {
-        "TermsOfServiceLink": "https://google.com",
-        "PrivacyPolicyLink": "https://google.com",
-        "AboutLink": "https://google.com",
-        "HelpLink": "https://google.com",
-        "ReportAProblemLink": "https://google.com",
-        "SupportEmail": "test@test.com"
+        "TermsOfServiceLink": "https://docs.wixstatic.com/ugd/d92a4c_c9fb8240e3764739a1573ad129f790ff.pdf",
+        "PrivacyPolicyLink": "https://docs.wixstatic.com/ugd/d92a4c_597bde49c8394670888f50407f2fbce3.pdf",
+        "AboutLink": "https://scrybechat.com",
+        "HelpLink": "https://scrybechat.com",
+        "ReportAProblemLink": "https://scrybechat.com",
+        "SupportEmail": "help@getscrybe.com"
     },
     "AnnouncementSettings": {
         "EnableBanner": false,
